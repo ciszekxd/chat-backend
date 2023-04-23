@@ -1,20 +1,50 @@
 databaseChangeLog:
   - changeSet:
       id: initialise
-      author: John Doe
+      author: liquibase
       changes:
         - createTable:
-            tableName: users
+            tableName: chat_user
             columns:
               - column:
-                  name: u_id
+                  name: cu_id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cu_user_hash
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cu_created_date
+                  type: timestamp
+        - createTable:
+            tableName: message
+            columns:
+              - column:
+                  name: m_id
                   type: BIGINT
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: u_user_hash
-                  type: VARCHAR(50)
+                  name: m_content
+                  type: VARCHAR(2000)
                   constraints:
                     nullable: false
+              - column:
+                  name: m_chat_user_id
+                  type: BIGINT
+              - column:
+                  name: m_sent
+                  type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: message
+            baseColumnNames: m_chat_user_id
+            referencedTableName: chat_user
+            referencedColumnNames: cu_id
+            constraintName: m_chat_user_id_cu_id_fk
