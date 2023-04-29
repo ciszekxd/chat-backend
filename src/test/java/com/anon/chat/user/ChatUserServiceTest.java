@@ -1,13 +1,9 @@
 package com.anon.chat.user;
 
-import com.anon.chat.connection.UserConnectionDto;
-import com.anon.chat.connection.UserConnectionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ChatUserServiceTest {
 
