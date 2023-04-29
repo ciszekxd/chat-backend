@@ -18,6 +18,7 @@ databaseChangeLog:
                   type: VARCHAR(36)
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: cu_created_date
                   type: timestamp
@@ -48,3 +49,52 @@ databaseChangeLog:
             referencedTableName: chat_user
             referencedColumnNames: cu_id
             constraintName: m_chat_user_id_cu_id_fk
+        - createTable:
+            tableName: connection
+            columns:
+              - column:
+                  name: c_id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: c_created_date
+                  type: timestamp
+              - column:
+                  name: c_active
+                  type: boolean
+        - createTable:
+            tableName: user_connection
+            columns:
+              - column:
+                  name: uc_id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uc_connection_id
+                  type: SERIAL
+              - column:
+                  name: uc_user
+                  type: SERIAL
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: user_connection
+            baseColumnNames: uc_user
+            referencedTableName: chat_user
+            referencedColumnNames: cu_id
+            constraintName: uc_user_uc_cu_id_fk
+            referencesUniqueColumn: true
+        - addForeignKeyConstraint:
+            baseTableName: user_connection
+            baseColumnNames: uc_connection_id
+            referencedTableName: connection
+            referencedColumnNames: c_id
+            constraintName: uc_connection_id_c_id_fk
+            referencesUniqueColumn: true
+
