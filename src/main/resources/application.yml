@@ -1,0 +1,13 @@
+spring:
+
+  liquibase:
+    change-log: db/changelog-master.yml
+    drop-first: true
+springdoc:
+  api-docs:
+    version: openapi_3_0
+    
+  swagger-ui:
+    enabled: true
+    path: /swagger
+    operations-sorter: method
