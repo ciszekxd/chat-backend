@@ -18,10 +18,10 @@ public class Connection {
         }
 
         if (firstUser.equals(user)){
-            return firstUser;
+            return secondUser;
         }
 
-        return secondUser;
+        return firstUser;
     }
 
     @Override

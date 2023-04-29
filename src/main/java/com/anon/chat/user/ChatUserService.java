@@ -7,10 +7,10 @@ import java.util.UUID;
 
 @Service
 public class ChatUserService {
-    private final ChatUserRepository userRepository;
+    private final ChatUserRepository chatUserRepository;
 
     public ChatUserService(ChatUserRepository userRepository) {
-        this.userRepository = userRepository;
+        this.chatUserRepository = userRepository;
     }
 
     public String registerUser(){
@@ -18,7 +18,7 @@ public class ChatUserService {
 
         var user = new ChatUserDto(uuid.toString(), LocalDateTime.now());
 
-        userRepository.save(user);
+        chatUserRepository.save(user);
 
         return user.getUserHash();
     }
