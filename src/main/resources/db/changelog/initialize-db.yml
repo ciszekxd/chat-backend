@@ -74,15 +74,12 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: uc_connection_id
-                  type: SERIAL
+                  type: BIGINT
               - column:
                   name: uc_user
-                  type: SERIAL
-                  constraints:
-                    nullable: false
+                  type: BIGINT
         - addForeignKeyConstraint:
             baseTableName: user_connection
             baseColumnNames: uc_user
