@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "chat_user")
-public class ChatUserDao {
+public class ChatUserDto {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "chat_user_cu_id_seq")
     @Column(name = "cu_id")
@@ -33,7 +33,7 @@ public class ChatUserDao {
     @NotNull
     private LocalDateTime createdDate;
 
-    public ChatUserDao(String userHash, LocalDateTime createdDate) {
+    public ChatUserDto(String userHash, LocalDateTime createdDate) {
         this.userHash = userHash;
         this.createdDate = createdDate;
     }

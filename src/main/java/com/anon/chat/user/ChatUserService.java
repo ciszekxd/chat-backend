@@ -16,7 +16,7 @@ public class ChatUserService {
     public String registerUser(){
         UUID uuid = UUID.randomUUID();
 
-        var user = new ChatUserDao(uuid.toString(), LocalDateTime.now());
+        var user = new ChatUserDto(uuid.toString(), LocalDateTime.now());
 
         userRepository.save(user);
 
