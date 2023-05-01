@@ -24,6 +24,10 @@ public class Connection {
         return firstUser;
     }
 
+    public boolean isUserInConnection(final String user) {
+        return this.firstUser.equals(user) || this.secondUser.equals(user);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

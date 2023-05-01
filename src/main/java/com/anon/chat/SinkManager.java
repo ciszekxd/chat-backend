@@ -30,6 +30,7 @@ public class SinkManager {
     public void pushMessage(Connection connection, MessageDao messageDao){
         var connectionSink = connectionMap.get(connection);
         connectionSink.tryEmitNext(new ChatMessageDto(messageDao.getSender(), messageDao.getMessage()));
+        connectionSink.emitComplete(Sinks.EmitFailureHandler.FAIL_FAST);
     }
 
     public Optional<Sinks.Many<ChatMessageDto>> getSinkForConnection(Connection connection){

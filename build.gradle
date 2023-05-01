@@ -33,6 +33,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+	testImplementation group: 'io.projectreactor', name: 'reactor-test', version: '3.5.5'
 
 }
 

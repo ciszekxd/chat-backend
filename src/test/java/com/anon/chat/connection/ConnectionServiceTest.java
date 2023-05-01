@@ -1,5 +1,6 @@
 package com.anon.chat.connection;
 
+import com.anon.chat.SinkManager;
 import com.anon.chat.user.ChatUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ class ConnectionServiceTest {
     private ChatUserRepository chatUserRepositoryMock;
 
     private UserConnectionRepository userConnectionRepositoryMock;
+    private ConnectionManager connectionManager;
+    private SinkManager sinkManager;
 
     @BeforeEach
     public void prepareMocks(){
@@ -22,12 +25,21 @@ class ConnectionServiceTest {
 
         userConnectionRepositoryMock = Mockito.mock(UserConnectionRepository.class);
         Mockito.when(userConnectionRepositoryMock.save(Mockito.any())).thenReturn(new UserConnectionDto());
+
+        connectionManager = Mockito.mock(ConnectionManager.class);
+        Mockito.doNothing().when(connectionManager).addConnection(Mockito.any());
+
+        sinkManager = Mockito.mock(SinkManager.class);
+        Mockito.doNothing().when(sinkManager).makeSinkForConnection(Mockito.any());
     }
 
     @Test
     void shouldPerformTwoSaveActionsForConnection() {
         //given
-        ConnectionService connectionService = new ConnectionService(chatUserRepositoryMock, userConnectionRepositoryMock);
+        ConnectionService connectionService = new ConnectionService(chatUserRepositoryMock,
+                userConnectionRepositoryMock,
+                sinkManager,
+                connectionManager);
 
         //when
         connectionService.connectUser("user1");
