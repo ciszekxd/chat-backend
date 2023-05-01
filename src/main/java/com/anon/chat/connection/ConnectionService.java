@@ -1,5 +1,6 @@
 package com.anon.chat.connection;
 
+import com.anon.chat.SinkManager;
 import com.anon.chat.user.ChatUserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,30 @@ public class ConnectionService {
 
     private final UserConnectionRepository userConnectionRepository;
 
-    public ConnectionService(ChatUserRepository chatUserRepository, UserConnectionRepository userConnectionRepository) {
+    private final SinkManager sinkManager;
+    private final ConnectionManager connectionManager;
+
+
+    public ConnectionService(ChatUserRepository chatUserRepository,
+                             UserConnectionRepository userConnectionRepository,
+                             SinkManager sinkManager,
+                             ConnectionManager connectionManager) {
         this.chatUserRepository = chatUserRepository;
         this.userConnectionRepository = userConnectionRepository;
+        this.sinkManager = sinkManager;
+        this.connectionManager = connectionManager;
     }
 
     public void connectUser(final String connectingUser){
         final var otherUser = findRandomUser(connectingUser);
 
-        ConnectionManager.addConnection(new Connection(connectingUser, otherUser));
+        final var newConnection = new Connection(connectingUser, otherUser);
+
+        connectionManager.addConnection(newConnection);
+        sinkManager.makeSinkForConnection(newConnection);
 
         addConnectionToDb(connectingUser);
         addConnectionToDb(otherUser);
-
     }
 
     private void addConnectionToDb(final String userName){

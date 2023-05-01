@@ -1,20 +1,22 @@
 package com.anon.chat;
 
 import com.anon.chat.user.ChatUserRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
+@Scope("singleton")
 public class GlobalStatistic {
 
-    private static ChatUserRepository chatUserRepository;
+    private final ChatUserRepository chatUserRepository;
 
-    private static Integer allUsersNumber = null;
+    private Integer allUsersNumber = null;
 
     public GlobalStatistic(ChatUserRepository chatUserRepository) {
         this.chatUserRepository = chatUserRepository;
     }
 
-    public static Integer getAllUsersNumber(){
+    public Integer getAllUsersNumber(){
         if(allUsersNumber == null){
             allUsersNumber = chatUserRepository.findAmountOfAll();
         }
