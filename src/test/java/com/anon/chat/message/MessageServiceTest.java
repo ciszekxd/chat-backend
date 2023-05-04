@@ -4,6 +4,7 @@ import com.anon.chat.ChatMessageDto;
 import com.anon.chat.SinkManager;
 import com.anon.chat.connection.Connection;
 import com.anon.chat.connection.ConnectionManager;
+import com.anon.chat.connection.ConnectionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,9 @@ class MessageServiceTest {
     @Test
     void shouldThrowNoUserFoundException() {
         //given
-        MessageService messageService = new MessageService(sinkManagerMock, new ConnectionManager());
+        var connectionRepositoryMock = Mockito.mock(ConnectionRepository.class);
+        MessageService messageService = new MessageService(sinkManagerMock,
+                new ConnectionManager(connectionRepositoryMock));
 
         //then
         Assertions.assertThrows(RuntimeException.class,

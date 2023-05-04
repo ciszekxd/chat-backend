@@ -3,6 +3,7 @@ package com.anon.chat.connection;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,19 @@ import java.util.List;
 public class ConnectionManager {
     private final List<Connection> connectionList = new ArrayList<>();
 
-    public void addConnection(Connection connection){
+    private final ConnectionRepository connectionRepository;
+
+    public ConnectionManager(ConnectionRepository connectionRepository) {
+        this.connectionRepository = connectionRepository;
+    }
+
+    public Long addConnection(Connection connection){
         connectionList.add(connection);
+
+        var connectionDto = new ConnectionDto(null, LocalDateTime.now(), true);
+        connectionRepository.save(connectionDto);
+
+        return connectionDto.getId();
     }
 
     public Connection getConnectionForUser(final String username){

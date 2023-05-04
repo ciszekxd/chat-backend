@@ -4,8 +4,8 @@ import com.anon.chat.SinkManager;
 import com.anon.chat.user.ChatUserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.random.RandomGenerator;
 
 @Service
@@ -33,15 +33,23 @@ public class ConnectionService {
 
         final var newConnection = new Connection(connectingUser, otherUser);
 
-        connectionManager.addConnection(newConnection);
         sinkManager.makeSinkForConnection(newConnection);
 
-        addConnectionToDb(connectingUser);
-        addConnectionToDb(otherUser);
+        addConnectionToDb(connectingUser, otherUser);
     }
 
-    private void addConnectionToDb(final String userName){
-        UserConnectionDto userConnectionDto = new UserConnectionDto(null, userName, LocalDateTime.now());
+    private void addConnectionToDb(final String username, final String otherUser){
+
+        var connectionId = connectionManager.addConnection(new Connection(username, otherUser));
+
+        var chatUserDto = chatUserRepository.findChatUserDtoInUserHash(List.of(username, otherUser));
+
+        addUserConnectionToDb(connectionId, chatUserDto.get(0).getId());
+        addUserConnectionToDb(connectionId, chatUserDto.get(1).getId());
+    }
+
+    private void addUserConnectionToDb(Long connectionId, Long userId){
+        UserConnectionDto userConnectionDto = new UserConnectionDto(null, connectionId, userId);
         userConnectionRepository.save(userConnectionDto);
     }
 

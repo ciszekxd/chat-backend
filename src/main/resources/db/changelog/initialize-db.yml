@@ -78,14 +78,14 @@ databaseChangeLog:
                   name: uc_connection_id
                   type: BIGINT
               - column:
-                  name: uc_user
+                  name: uc_user_id
                   type: BIGINT
         - addForeignKeyConstraint:
             baseTableName: user_connection
-            baseColumnNames: uc_user
+            baseColumnNames: uc_user_id
             referencedTableName: chat_user
             referencedColumnNames: cu_id
-            constraintName: uc_user_uc_cu_id_fk
+            constraintName: uc_user_id_cu_id_fk
             referencesUniqueColumn: true
         - addForeignKeyConstraint:
             baseTableName: user_connection

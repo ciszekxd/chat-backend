@@ -11,23 +11,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
-@Table(name = "user_connection")
-public class UserConnectionDto {
+@Getter
+@NoArgsConstructor
+@Setter
+@Table(name = "connection")
+public class ConnectionDto {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "connection_seq")
     @Id
-    @Column(name = "uc_id")
+    @Column(name = "c_id")
     private Long id;
 
-    @Column(name = "uc_connection_id")
-    private Long connectionId;
+    @Column(name = "c_created_date")
+    private LocalDateTime createdDate;
 
-    @Column(name = "uc_user_id")
-    private Long userId;
-
+    @Column(name = "c_active")
+    private boolean active;
 }
