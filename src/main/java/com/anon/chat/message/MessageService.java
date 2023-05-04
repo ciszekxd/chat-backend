@@ -4,7 +4,7 @@ import com.anon.chat.ChatMessageDto;
 import com.anon.chat.SinkManager;
 import com.anon.chat.connection.ConnectionManager;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Sinks;
+import reactor.core.publisher.Flux;
 
 @Service
 public class MessageService {
@@ -24,10 +24,10 @@ public class MessageService {
         sinkManager.pushMessage(connection, messageDao);
     }
 
-    public Sinks.Many<ChatMessageDto> getSinkForUser(final String user){
+    public Flux<ChatMessageDto> getSinkForUser(final String user){
         var connection = connectionManager.getConnectionForUser(user);
         return sinkManager.getSinkForConnection(connection)
-                .orElseThrow(() -> new RuntimeException("connection not found"));
+                .orElseThrow(() -> new RuntimeException("connection not found")).asFlux();
     }
 
 }
