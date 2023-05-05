@@ -81,9 +81,10 @@ class MessageServiceTest {
         messageService.send(new MessageDao(senderUsername, "Message1"));
 
         var sink = messageService.getSinkForUser(senderUsername);
+        realSinkManager.closeSink(usersConnection);
 
         //then
-        StepVerifier.create(sink.asFlux(), 1)
+        StepVerifier.create(sink, 1)
                 .expectNext(message)
                 .verifyComplete();
 

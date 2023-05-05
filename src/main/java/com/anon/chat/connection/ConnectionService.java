@@ -35,17 +35,19 @@ public class ConnectionService {
 
         sinkManager.makeSinkForConnection(newConnection);
 
-        addConnectionToDb(connectingUser, otherUser);
+        connectionManager.addConnection(newConnection);
+
+        var chatUserDto = chatUserRepository.findChatUserDtoInUserHash(List.of(connectingUser, otherUser));
+
+        addUserConnectionToDb(newConnection.getId(), chatUserDto.get(0).getId());
+        addUserConnectionToDb(newConnection.getId(), chatUserDto.get(1).getId());
     }
 
-    private void addConnectionToDb(final String username, final String otherUser){
+    public void closeConnectionForUser(final String username){
+        Connection connectionToClose = connectionManager.getConnectionForUser(username);
 
-        var connectionId = connectionManager.addConnection(new Connection(username, otherUser));
-
-        var chatUserDto = chatUserRepository.findChatUserDtoInUserHash(List.of(username, otherUser));
-
-        addUserConnectionToDb(connectionId, chatUserDto.get(0).getId());
-        addUserConnectionToDb(connectionId, chatUserDto.get(1).getId());
+        sinkManager.closeSink(connectionToClose);
+        connectionManager.removeConnection(connectionToClose);
     }
 
     private void addUserConnectionToDb(Long connectionId, Long userId){

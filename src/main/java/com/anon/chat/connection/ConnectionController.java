@@ -22,4 +22,11 @@ public class ConnectionController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/disconnect")
+    public ResponseEntity<Object> disconnect(@RequestParam("disconnectingUser") String disconnectingUser){
+        connectionService.closeConnectionForUser(disconnectingUser);
+
+        return ResponseEntity.ok().build();
+    }
 }

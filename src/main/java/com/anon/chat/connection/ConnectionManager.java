@@ -18,13 +18,18 @@ public class ConnectionManager {
         this.connectionRepository = connectionRepository;
     }
 
-    public Long addConnection(Connection connection){
+    public void addConnection(Connection connection){
         connectionList.add(connection);
 
         var connectionDto = new ConnectionDto(null, LocalDateTime.now(), true);
         connectionRepository.save(connectionDto);
 
-        return connectionDto.getId();
+        connection.setId(connectionDto.getId());
+    }
+
+    public void removeConnection(Connection connection){
+        connectionList.remove(connection);
+        connectionRepository.setInactive(connection.getId());
     }
 
     public Connection getConnectionForUser(final String username){

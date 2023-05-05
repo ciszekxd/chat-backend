@@ -1,11 +1,18 @@
 package com.anon.chat.connection;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 public class Connection {
     private final String firstUser;
 
     private final String secondUser;
+
+    @Getter
+    @Setter
+    private Long id;
 
     public Connection(String firstUser, String secondUser) {
         this.firstUser = firstUser;

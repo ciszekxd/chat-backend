@@ -32,7 +32,8 @@ class ConnectionServiceTest {
         Mockito.when(userConnectionRepositoryMock.save(Mockito.any())).thenReturn(new UserConnectionDto());
 
         connectionManager = Mockito.mock(ConnectionManager.class);
-        Mockito.when(connectionManager.addConnection(Mockito.any())).thenReturn(1L);
+        Mockito.doNothing().when(connectionManager).addConnection(Mockito.any());
+        //Mockito.when(connectionManager.addConnection(Mockito.any())).thenReturn(1L);
 
         sinkManager = Mockito.mock(SinkManager.class);
         Mockito.doNothing().when(sinkManager).makeSinkForConnection(Mockito.any());
