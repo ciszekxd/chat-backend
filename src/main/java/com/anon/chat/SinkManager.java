@@ -12,16 +12,8 @@ import java.util.Optional;
 @Component
 @Scope("singleton")
 public class SinkManager {
-    private static Sinks.Many<ChatMessageDto> sinkMap = null;
 
     private final Map<Connection, Sinks.Many<ChatMessageDto>> connectionMap = new HashMap<>();
-
-    public Sinks.Many<ChatMessageDto> getSink(){
-        if (sinkMap == null){
-            sinkMap = Sinks.many().multicast().onBackpressureBuffer();
-        }
-        return sinkMap;
-    }
 
     public void makeSinkForConnection(final Connection connection){
         connectionMap.put(connection, Sinks.many().multicast().onBackpressureBuffer(100));
