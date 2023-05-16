@@ -42,7 +42,7 @@ class ConnectionServiceTest {
     @Test
     void shouldPerformTwoSaveActionsForConnection() {
         //given
-        ConnectionService connectionService = new ConnectionService(chatUserRepositoryMock,
+        NaiveConnectionService connectionService = new NaiveConnectionService(chatUserRepositoryMock,
                 userConnectionRepositoryMock,
                 sinkManager,
                 connectionManager);

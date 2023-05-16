@@ -2,9 +2,11 @@ package com.anon.chat.connection;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
+@ToString
 public class Connection {
     private final String firstUser;
 
